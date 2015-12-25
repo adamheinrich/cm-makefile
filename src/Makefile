@@ -105,14 +105,18 @@ flash: $(BUILD_DIR)/$(BIN).hex
 gdb: $(BUILD_DIR)/$(BIN).hex
 	$(OPENOCD) -f $(OPENOCD_SCRIPT) -c \
 	"init; \
-	reset halt; \
-	sleep 500; \
-	flash write_image erase $(BUILD_DIR)/$(BIN).hex"
+	reset halt"
 
 debug: $(BUILD_DIR)/$(BIN).hex
-	$(GDB) -tui --eval-command="target remote localhost:3333" \
-	$(BUILD_DIR)/$(BIN).elf
+	@echo "target remote localhost:3333\n\
+	monitor reset halt\n\
+	load\n\
+	break main\n\
+	continue\n" > $(BUILD_DIR)/$(BIN).gdbinit
+
+	$(GDB) -x $(BUILD_DIR)/$(BIN).gdbinit -tui $(BUILD_DIR)/$(BIN).elf
 
 clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.map
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
+	rm -f $(BUILD_DIR)/*.gdbinit
