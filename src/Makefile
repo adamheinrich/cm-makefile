@@ -30,17 +30,18 @@ OPENOCD_SCRIPT = board/st_nucleo_f0.cfg
 
 # Compiler and linker flags
 ARCHFLAGS = -mcpu=cortex-m0 -mthumb -mabi=aapcs
+DBGFLAGS = -ggdb
 ASFLAGS = $(ARCHFLAGS)
 
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections). Enable link time optimization (-flto)
 CFLAGS = $(ARCHFLAGS) -std=gnu99 -Wall -Wno-format -Werror \
          -ffunction-sections -fdata-sections \
-         -Os -flto -ggdb
+         -Os -flto $(DBGFLAGS)
 
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
 LDFLAGS = $(ARCHFLAGS) -Wl,--gc-sections --specs=nano.specs --specs=nosys.specs
-LDFLAGS += -Wl,-Map=$(BUILD_DIR)/$(BIN).map
+LDFLAGS += -Wl,-Map=$(BUILD_DIR)/$(BIN).map $(DBGFLAGS)
 
 # Generate object list from source files and add their dirs to search path
 SRC_ASM += $(wildcard *.s) 
