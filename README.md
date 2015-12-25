@@ -40,15 +40,14 @@ Makefile:
 
 This template can be easily used with different family than STM32F0. It's only
 necessary to download proper version of the [STM32Cube][5] library
-(F1, F2, ...) and configure ``ARCHFLAGS`` to match its architecture:
+(F1, F2, ...) and configure the ``-mcpu=`` option in ``ARCHFLAGS`` to match MCU
+architecture:
 
-- Cortex-M0: ``-mthumb -mcpu=cortex-m0``
-- Cortex-M0+: ``-mthumb -mcpu=cortex-m0plus``
-- Cortex-M3: ``-mthumb -mcpu=cortex-m3``
-- Cortex-M4 (Soft FP): ``-mthumb -mcpu=cortex-m4 -mfloat-abi=softfp
-  -mfpu=fpv4-sp-d16``
-- Cortex-M4 (Hard FP): ``-mthumb -mcpu=cortex-m4 -mfloat-abi=hard
-  -mfpu=fpv4-sp-d16``
+- Cortex-M0: ``-mcpu=cortex-m0``
+- Cortex-M0+: ``-mcpu=cortex-m0plus``
+- Cortex-M3: ``-mcpu=cortex-m3``
+- Cortex-M4 (Soft FP): ``-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16``
+- Cortex-M4 (Hard FP): ``-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16``
 
 ## Usage
 
