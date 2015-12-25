@@ -76,12 +76,10 @@ $(BUILD_DIR)/$(BIN).hex: $(BUILD_DIR)/$(BIN).elf
 $(BUILD_DIR)/%.o: %.s
 	@echo "Compiling ASM file: $(notdir $<)"
 	$(CMD_ECHO) $(AS) $(ASFLAGS) $(DEF) $(INC) -c -o $@ $<
-	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(@:.o=.disasm)
 
 $(BUILD_DIR)/%.o: %.c
 	@echo "Compiling C file: $(notdir $<)"
 	$(CMD_ECHO) $(CC) $(CFLAGS) $(DEF) $(INC) -c -o $@ $<
-	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(@:.o=.disasm)
 
 $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	@echo "Linking ELF binary: $(notdir $@)"
