@@ -57,6 +57,7 @@ vpath %.c $(dir $(SRC_C))
 CC = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
 AS = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
 LD = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
+NM = $(TOOLCHAIN_DIR)/arm-none-eabi-nm
 OBJCOPY = $(TOOLCHAIN_DIR)/arm-none-eabi-objcopy
 OBJDUMP = $(TOOLCHAIN_DIR)/arm-none-eabi-objdump
 SIZE = $(TOOLCHAIN_DIR)/arm-none-eabi-size
@@ -85,6 +86,9 @@ $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	@echo "Linking ELF binary: $(notdir $@)"
 	$(CMD_ECHO) $(LD) $(LDFLAGS) -T$(SRC_LD) -o $@ $^
 	
+	@echo "Generating name list: $(BIN).sym"
+	$(CMD_ECHO) $(NM) -n $@ > $(BUILD_DIR)/$(BIN).sym
+
 	@echo "Generating disassembly: $(BIN).disasm"
 	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(BUILD_DIR)/$(BIN).disasm
 
@@ -110,4 +114,4 @@ debug: $(BUILD_DIR)/$(BIN).hex
 
 clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.map
-	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.disasm
+	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
