@@ -27,6 +27,7 @@ DEF = -DSTM32F030x8
 # Debug interface configuration
 OPENOCD = openocd
 OPENOCD_SCRIPT = board/st_nucleo_f0.cfg
+CDTDEBUG = /Applications/cdt-stand-alone-debugger.app/Contents/MacOS/cdtdebug
 
 # Compiler and linker flags
 ARCHFLAGS = -mcpu=cortex-m0 -mthumb -mabi=aapcs
@@ -105,18 +106,14 @@ flash: $(BUILD_DIR)/$(BIN).hex
 gdb: $(BUILD_DIR)/$(BIN).hex
 	$(OPENOCD) -f $(OPENOCD_SCRIPT) -c \
 	"init; \
+	reset halt; \
+	sleep 500; \
+	flash write_image erase $(BUILD_DIR)/$(BIN).hex; \
 	reset halt"
 
 debug: $(BUILD_DIR)/$(BIN).hex
-	@echo "target remote localhost:3333\n\
-	monitor reset halt\n\
-	load\n\
-	break main\n\
-	continue\n" > $(BUILD_DIR)/$(BIN).gdbinit
-
-	$(GDB) -x $(BUILD_DIR)/$(BIN).gdbinit -tui $(BUILD_DIR)/$(BIN).elf
-
+	@echo "Starting cdtdebug..."
+	$(CMD_ECHO) $(CDTDEBUG) -r localhost:3333 -e $(realpath $(BUILD_DIR)/$(BIN).elf) &
 clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.map
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
-	rm -f $(BUILD_DIR)/*.gdbinit
