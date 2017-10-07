@@ -1,5 +1,3 @@
-.DS_Store
 *.sublime-*
 build/
-lib/STM32*
-
+lib/STM32Cube_FW_*
