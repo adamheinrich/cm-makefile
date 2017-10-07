@@ -14,7 +14,7 @@ CUBE_DEVICE_DIR = $(CUBE_DIR)/Drivers/CMSIS/Device/ST/STM32F0xx
 
 INC = -I. \
       -I$(CUBE_DIR)/Drivers/CMSIS/Include \
-      -I$(CUBE_DIR)/Drivers/CMSIS/Device/ST/STM32F0xx/Include
+      -I$(CUBE_DEVICE_DIR)/Include
 
 # ASM and C (e.g. startup) source files and linker script outside src directory
 SRC_ASM = $(CUBE_DEVICE_DIR)/Source/Templates/gcc/startup_stm32f030x8.s
