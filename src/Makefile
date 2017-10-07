@@ -26,7 +26,7 @@ DEF = -DSTM32F030x8
 
 # Debug interface configuration
 OPENOCD = openocd -f board/st_nucleo_f0.cfg
-CDTDEBUG = /Applications/cdt-stand-alone-debugger.app/Contents/MacOS/cdtdebug
+CDTDEBUG = cdtdebug
 
 # Compiler and linker flags
 ARCHFLAGS = -mcpu=cortex-m0 -mthumb -mabi=aapcs
@@ -119,9 +119,14 @@ gdb: $(BUILD_DIR)/$(BIN).hex
 	flash write_image erase $^; \
 	reset halt"
 
-debug: $(BUILD_DIR)/$(BIN).hex
-	@echo "Starting cdtdebug..."
-	$(CMD_ECHO) $(CDTDEBUG) -r localhost:3333 -e $(realpath $(BUILD_DIR)/$(BIN).elf) &
+debug: $(BUILD_DIR)/$(BIN).elf
+	@echo "Starting cdtdebug with $(GDB)..."
+	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)" \
+	    > $(BUILD_DIR)/cdtdebug.ini
+	$(CMD_ECHO) $(CDTDEBUG) -pluginCustomization $(BUILD_DIR)/cdtdebug.ini \
+	    -r localhost:3333 -e $(realpath $^) &
+
 clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.map
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
+	rm -f $(BUILD_DIR)/*.ini
