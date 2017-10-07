@@ -25,8 +25,7 @@ SRC_LD = $(CUBE_DIR)/Projects/STM32F030R8-Nucleo/Templates/TrueSTUDIO/STM32F030R
 DEF = -DSTM32F030x8
 
 # Debug interface configuration
-OPENOCD = openocd
-OPENOCD_SCRIPT = board/st_nucleo_f0.cfg
+OPENOCD = openocd -f board/st_nucleo_f0.cfg
 CDTDEBUG = /Applications/cdt-stand-alone-debugger.app/Contents/MacOS/cdtdebug
 
 # Compiler and linker flags
@@ -96,20 +95,28 @@ $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(BUILD_DIR)/$(BIN).disasm
 
 flash: $(BUILD_DIR)/$(BIN).hex
-	$(OPENOCD) -f $(OPENOCD_SCRIPT) -c \
+	$(CMD_ECHO) $(OPENOCD) -c \
 	"init; \
 	reset halt; \
 	sleep 500; \
-	flash write_image erase $(BUILD_DIR)/$(BIN).hex; \
+	flash write_image erase $^; \
+	reset run; \
+	shutdown"
+
+reset:
+	$(CMD_ECHO) $(OPENOCD) -c \
+	"init; \
+	reset halt; \
+	sleep 500; \
 	reset run; \
 	shutdown"
 
 gdb: $(BUILD_DIR)/$(BIN).hex
-	$(OPENOCD) -f $(OPENOCD_SCRIPT) -c \
+	$(CMD_ECHO) $(OPENOCD) -c \
 	"init; \
 	reset halt; \
 	sleep 500; \
-	flash write_image erase $(BUILD_DIR)/$(BIN).hex; \
+	flash write_image erase $^; \
 	reset halt"
 
 debug: $(BUILD_DIR)/$(BIN).hex
