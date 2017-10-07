@@ -6,7 +6,7 @@ BIN = hello
 
 # Important directories
 BUILD_DIR = ../build
-TOOLCHAIN_DIR = /usr/local/gcc-arm-none-eabi-4_9-2015q1/bin
+TOOLCHAIN ?= arm-none-eabi-
 
 # Include paths (STM32CubeF0 library)
 CUBE_DIR = ../lib/STM32Cube_FW_F0_V1.4.0
@@ -56,14 +56,14 @@ OBJS_C = $(addprefix $(BUILD_DIR)/, $(FILENAMES_C:.c=.o))
 vpath %.c $(dir $(SRC_C))
 
 # Tools selection
-CC = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
-AS = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
-LD = $(TOOLCHAIN_DIR)/arm-none-eabi-gcc
-NM = $(TOOLCHAIN_DIR)/arm-none-eabi-nm
-OBJCOPY = $(TOOLCHAIN_DIR)/arm-none-eabi-objcopy
-OBJDUMP = $(TOOLCHAIN_DIR)/arm-none-eabi-objdump
-SIZE = $(TOOLCHAIN_DIR)/arm-none-eabi-size
-GDB = $(TOOLCHAIN_DIR)/arm-none-eabi-gdb
+CC = $(TOOLCHAIN)gcc
+AS = $(TOOLCHAIN)gcc
+LD = $(TOOLCHAIN)gcc
+NM = $(TOOLCHAIN)nm
+OBJCOPY = $(TOOLCHAIN)objcopy
+OBJDUMP = $(TOOLCHAIN)objdump
+SIZE = $(TOOLCHAIN)size
+GDB = $(TOOLCHAIN)gdb
 
 all: $(BUILD_DIR) $(BUILD_DIR)/$(BIN).hex
 	@echo ""
