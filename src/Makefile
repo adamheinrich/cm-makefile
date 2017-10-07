@@ -32,17 +32,18 @@ CDTDEBUG = /Applications/cdt-stand-alone-debugger.app/Contents/MacOS/cdtdebug
 # Compiler and linker flags
 ARCHFLAGS = -mcpu=cortex-m0 -mthumb -mabi=aapcs
 DBGFLAGS = -ggdb
+OPTFLAGS = -O3 -flto
+
 ASFLAGS = $(ARCHFLAGS)
 
 # CC: Place functions and data into separate sections to allow dead code removal
-# by the linker (-f*-sections). Enable link time optimization (-flto)
-CFLAGS = $(ARCHFLAGS) -std=gnu99 -Wall -Wno-format -Werror \
-         -ffunction-sections -fdata-sections \
-         -Os -flto $(DBGFLAGS)
+# by the linker (-f*-sections)
+CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -std=gnu99 -Wall -Wno-format \
+         -Werror -ffunction-sections -fdata-sections
 
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
-LDFLAGS = $(ARCHFLAGS) -Wl,--gc-sections --specs=nano.specs --specs=nosys.specs
-LDFLAGS += -Wl,-Map=$(BUILD_DIR)/$(BIN).map $(DBGFLAGS)
+LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -Wl,-Map=$(BUILD_DIR)/$(BIN).map\
+          -Wl,--gc-sections --specs=nano.specs --specs=nosys.specs
 
 # Generate object list from source files and add their dirs to search path
 SRC_ASM += $(wildcard *.s) 
