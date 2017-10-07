@@ -1,10 +1,8 @@
 # STM32 Template
 
-Makefile template for STM32 Cortex-M projects using the GCC ARM Embedded
-toolchain.
-
-The template is configured for STM32F030R8 Nucleo board but it can be easily
-modified to support any other development kit by ST.
+Makefile template for STM32-based Cortex-M projects using the GCC ARM Embedded
+toolchain. Although the template is configured for the STM32F030R8 Nucleo board,
+it can be easily modified for any other development kit by ST.
 
 ## Dependencies
 
@@ -20,7 +18,7 @@ Version numbers correspond to my current setup. Newer versions will probably
 work as well.
 
 The STM32CubeF0 library has to be placed in directory
-``lib/STM32Cube_FW_F0_Vx.x.x``. Only CMSIS compliant headers, startup code and
+`lib/STM32Cube_FW_F0_Vx.x.x`. Only CMSIS compliant headers, startup code and
 linker script are used. Any higher level components provided by the Cube library
 (such as HAL) are ignored.
 
@@ -30,9 +28,9 @@ Both the toolchain and OpenOCD can be installed from Ubuntu packages:
 
 	sudo apt-get install gcc-arm-embedded openocd
 
-It is also possible to download a specific version of the toolchain. In this
-case, it might be necessary to obtain 32-bit libc and libncurses (required by
-`gdb`):
+It is also possible to download a specific version of the toolchain directly
+from the [website][1]. In this case, it might be necessary to obtain 32-bit
+`libc` and `libncurses` (required by `gdb`):
 
 	sudo apt-get install libc6:i386 libncurses5:i386
 
@@ -41,29 +39,29 @@ case, it might be necessary to obtain 32-bit libc and libncurses (required by
 The configuration is quite straightforward. Check the following variables in
 `Makefile`:
 
-- ``CUBE_DIR`` - location of the STM32CubeF0
-- ``SRC_ASM`` - startup code (assembler, MCU specific)
-- ``SRC_C`` - CMSIS initialization code
-- ``SRC_LD`` - linker script (MCU specific)
-- ``DEF`` - #define for specific MCU selection
-- ``OPENOCD`` - OpenOCD command (with script selection) to set up debug session.
-  You can create your own or use one of the [built-in scripts][5].
+- `CUBE_DIR`: location of the STM32CubeF0
+- `SRC_ASM`: startup code (assembler, MCU specific)
+- `SRC_C`: CMSIS initialization code
+- `SRC_LD`: linker script (MCU specific)
+- `DEF`: Library-specific macros (`#define`) -- MCU selection in this case
+- `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
+  You can use one of the [built-in scripts][5] or create your own.
 
 ### Configuration for a different target
 
 This template can be easily used with different family than STM32F0. It's only
 necessary to download proper version of the [STM32Cube][6] library and configure
-the ``-mcpu`` option in ``ARCHFLAGS`` to match its CPU architecture:
+the `-mcpu` option in `ARCHFLAGS` to match its CPU architecture:
 
-- Cortex-M0: ``-mcpu=cortex-m0``
-- Cortex-M0+: ``-mcpu=cortex-m0plus``
-- Cortex-M3: ``-mcpu=cortex-m3``
-- Cortex-M4 (Soft FP): ``-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp``
-- Cortex-M4 (Hard FP): ``-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard``
+- Cortex-M0: `-mcpu=cortex-m0`
+- Cortex-M0+: `-mcpu=cortex-m0plus`
+- Cortex-M3: `-mcpu=cortex-m3`
+- Cortex-M4 (Soft FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp`
+- Cortex-M4 (Hard FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard`
 
 ## Usage
 
-To compile the project, simply ``cd`` to the `src` directory and run ``make``.
+To compile the project, simply `cd` to the `src` directory and run `make`.
 To use a specific toolchain (other than the default `arm-none-eabi`), simply
 set the `TOOLCHAIN` variable:
 
@@ -82,8 +80,8 @@ together with other files useful for debugging:
 To flash the program using OpenOCD, run `make flash`. To reset the CPU, run
 `make reset`.
 
-To debug the project, run ``make gdb`` (which starts OpenOCD's GDB server)
-followed by ``make debug`` in a different terminal (which starts the Eclipse
+To debug the project, run `make gdb` (which starts OpenOCD's GDB server)
+followed by `make debug` in a different terminal (which starts the Eclipse
 debugger). The GDB is configured to stop at a breakpoint placed at the beginning
 of `main()`.
 
