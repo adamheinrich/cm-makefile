@@ -1,5 +1,3 @@
-# Libraries
-
 Download the [STM32Cube][1] library for your MCU and unpack it into directory
 ``STM32Cube_FW_XX_Vx.x.x``.
 
