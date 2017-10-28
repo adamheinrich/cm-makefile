@@ -28,3 +28,5 @@ DEF = -DNRF51 \
 include ../common.mk
 include jlink.mk
 
+# Disable GCC warnings which are triggered by the nRF5 SDK
+WARNFLAGS += -Wno-pedantic -Wno-undef -Wno-sign-conversion -Wno-unused-parameter

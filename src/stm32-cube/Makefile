@@ -1,7 +1,7 @@
 # Project name
 BIN = stm32-cube
 
-# Include paths (STM32CubeF0 library)
+# Include paths (STM32CubeF0 SDK)
 CUBE_DIR = lib/STM32Cube_FW_F0_V1.4.0
 CUBE_DEVICE_DIR = $(CUBE_DIR)/Drivers/CMSIS/Device/ST/STM32F0xx
 
@@ -18,3 +18,6 @@ DEF = -DSTM32F030x8
 
 include ../common.mk
 include ../openocd.mk
+
+# Disable GCC warnings which are triggered by the STM32CubeF0 SDK
+WARNFLAGS = -Wno-undef -Wno-conversion
