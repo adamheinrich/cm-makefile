@@ -1,7 +1,7 @@
 #include <stm32f0xx.h>
 
 #define LED_PIN 5
- 
+
 void SysTick_Handler(void)
 {
 	/* Toggle GPIO pin PA5: */
