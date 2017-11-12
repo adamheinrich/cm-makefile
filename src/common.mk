@@ -1,7 +1,5 @@
-# Project name
+# Project name and build directory
 BIN ?= template
-
-# Important directories
 BUILD_DIR ?= ./build
 
 # Verbosity: Set V=1 to display command echo
@@ -22,7 +20,7 @@ SRC_ASM ?=
 SRC_C ?=
 SRC_LD ?=
 
-# Defines required by included libraries
+# Defines (e.g. required by included libraries)
 DEF ?=
 
 # Debugger configuration
