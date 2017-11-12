@@ -1,11 +1,17 @@
-# Set to @ if you want to suppress command echo
-CMD_ECHO ?= @
-
 # Project name
 BIN ?= template
 
 # Important directories
 BUILD_DIR ?= ./build
+
+# Verbosity: Set V=1 to display command echo
+V ?= 0
+
+ifeq ($(V), 0)
+	CMD_ECHO = @
+else
+	CMD_ECHO =
+endif
 
 # Include directories
 INC += -I.
