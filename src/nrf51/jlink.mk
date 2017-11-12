@@ -3,6 +3,12 @@ JLINK_EXE = JLinkExe
 JLINK_GDB = JLinkGDBServer
 JLINK_TARGET = NRF51
 
+HELP_TEXT += \n\
+  flash - Flash using J-Link\n\
+  reset - Reset the target MCU using J-Link\n\
+  gdb - Start J-Link GDB server\n\
+  debug - Start debugger and connect to the GDB server
+
 .PHONY: flash
 flash: $(BUILD_DIR)/$(BIN).hex
 	# NVMC - Nonvolatile Memory Controller (address 0x4001e)

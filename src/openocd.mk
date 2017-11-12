@@ -1,6 +1,12 @@
 # OpenOCD target configuration
 OPENOCD ?= openocd -f board/st_nucleo_f0.cfg
 
+HELP_TEXT += \n\
+  flash - Flash using OpenOCD\n\
+  reset - Reset the target MCU using OpenOCD\n\
+  gdb - Start OpenOCD as GDB server\n\
+  debug - Start debugger and connect to the GDB server
+
 .PHONY: flash
 flash: $(BUILD_DIR)/$(BIN).hex
 	$(CMD_ECHO) $(OPENOCD) -c \

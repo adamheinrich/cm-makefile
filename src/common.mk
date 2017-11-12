@@ -77,6 +77,11 @@ OBJDUMP := $(CROSS_COMPILE)objdump
 SIZE := $(CROSS_COMPILE)size
 GDB := $(CROSS_COMPILE)gdb
 
+# Help message:
+HELP_TEXT = Available targets:\n\
+  all - Build with default configuration\n\
+  clean - Remove build outputs
+
 .PHONY: all
 all: $(BUILD_DIR) $(BUILD_DIR)/$(BIN).hex  $(BUILD_DIR)/$(BIN).bin
 	@echo ""
@@ -120,3 +125,7 @@ clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.bin
 	rm -f $(BUILD_DIR)/*.map $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
 	rm -f $(BUILD_DIR)/*.ini $(BUILD_DIR)/*.o
+
+.PHONY: help
+help:
+	@echo -e '$(HELP_TEXT)'
