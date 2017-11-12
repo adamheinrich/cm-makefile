@@ -77,6 +77,7 @@ OBJDUMP := $(CROSS_COMPILE)objdump
 SIZE := $(CROSS_COMPILE)size
 GDB := $(CROSS_COMPILE)gdb
 
+.PHONY: all
 all: $(BUILD_DIR) $(BUILD_DIR)/$(BIN).hex  $(BUILD_DIR)/$(BIN).bin
 	@echo ""
 	$(CMD_ECHO) @$(SIZE) $(BUILD_DIR)/$(BIN).elf
@@ -114,6 +115,7 @@ $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	@echo "Generating disassembly: $(BIN).disasm"
 	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(BUILD_DIR)/$(BIN).disasm
 
+.PHONY: clean
 clean:
 	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.bin
 	rm -f $(BUILD_DIR)/*.map $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm

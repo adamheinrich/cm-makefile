@@ -1,6 +1,7 @@
 # OpenOCD target configuration
 OPENOCD ?= openocd -f board/st_nucleo_f0.cfg
 
+.PHONY: flash
 flash: $(BUILD_DIR)/$(BIN).hex
 	$(CMD_ECHO) $(OPENOCD) -c \
 	"init; \
@@ -10,6 +11,7 @@ flash: $(BUILD_DIR)/$(BIN).hex
 	reset run; \
 	shutdown"
 
+.PHONY: reset
 reset:
 	$(CMD_ECHO) $(OPENOCD) -c \
 	"init; \
@@ -18,6 +20,7 @@ reset:
 	reset run; \
 	shutdown"
 
+.PHONY: gdb
 gdb: $(BUILD_DIR)/$(BIN).hex
 	$(CMD_ECHO) $(OPENOCD) -c \
 	"init; \
@@ -26,6 +29,7 @@ gdb: $(BUILD_DIR)/$(BIN).hex
 	flash write_image erase $^; \
 	reset halt"
 
+.PHONY: debug
 debug: $(BUILD_DIR)/$(BIN).elf
 	@echo "Starting cdtdebug with $(GDB)..."
 	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)" \
