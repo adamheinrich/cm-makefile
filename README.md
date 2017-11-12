@@ -61,9 +61,9 @@ To compile the project, simply run `make` in its `src directory`, e.g.:
 	make
 
 To use a specific toolchain (other than the default `arm-none-eabi`), simply
-set the `TOOLCHAIN` variable:
+set the `CROSS_COMPILE` variable:
 
-	make TOOLCHAIN=/usr/local/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-
+	make CROSS_COMPILE=/usr/local/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-
 
 The process will create `.elf` and `.hex` binaries in the `build` directory
 together with other files useful for debugging:

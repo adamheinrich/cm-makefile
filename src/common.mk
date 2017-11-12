@@ -6,7 +6,6 @@ BIN ?= template
 
 # Important directories
 BUILD_DIR ?= ./build
-TOOLCHAIN ?= arm-none-eabi-
 
 # Include directories
 INC += -I.
@@ -61,14 +60,16 @@ OBJS_C = $(addprefix $(BUILD_DIR)/, $(FILENAMES_C:.c=.o))
 vpath %.c $(dir $(SRC_C))
 
 # Tools selection
-CC = $(TOOLCHAIN)gcc
-AS = $(TOOLCHAIN)gcc
-LD = $(TOOLCHAIN)gcc
-NM = $(TOOLCHAIN)nm
-OBJCOPY = $(TOOLCHAIN)objcopy
-OBJDUMP = $(TOOLCHAIN)objdump
-SIZE = $(TOOLCHAIN)size
-GDB = $(TOOLCHAIN)gdb
+CROSS_COMPILE ?= arm-none-eabi-
+
+CC := $(CROSS_COMPILE)gcc
+AS := $(CROSS_COMPILE)gcc
+LD := $(CROSS_COMPILE)gcc
+NM := $(CROSS_COMPILE)nm
+OBJCOPY := $(CROSS_COMPILE)objcopy
+OBJDUMP := $(CROSS_COMPILE)objdump
+SIZE := $(CROSS_COMPILE)size
+GDB := $(CROSS_COMPILE)gdb
 
 all: $(BUILD_DIR) $(BUILD_DIR)/$(BIN).hex  $(BUILD_DIR)/$(BIN).bin
 	@echo ""
