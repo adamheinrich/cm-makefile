@@ -91,33 +91,33 @@ $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
 
 $(BUILD_DIR)/$(BIN).hex: $(BUILD_DIR)/$(BIN).elf
-	@echo "Generating HEX binary: $(notdir $@)"
+	@echo "  IHEX    $(notdir $@)"
 	$(CMD_ECHO) $(OBJCOPY) -O ihex $< $@
 
 $(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
-	@echo "Generating BIN binary: $(notdir $@)"
+	@echo "  BIN     $(notdir $@)"
 	$(CMD_ECHO) $(OBJCOPY) -O binary $< $@
 
 $(BUILD_DIR)/%.o: %.s
-	@echo "Compiling ASM file: $(notdir $<)"
+	@echo "  AS      $(notdir $@)"
 	$(CMD_ECHO) $(AS) $(ASFLAGS) $(DEF) $(INC) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.S
-	@echo "Compiling ASM file: $(notdir $<)"
+	@echo "  AS      $(notdir $@)"
 	$(CMD_ECHO) $(AS) $(ASFLAGS) $(DEF) $(INC) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.c
-	@echo "Compiling C file: $(notdir $<)"
+	@echo "  CC      $(notdir $@)"
 	$(CMD_ECHO) $(CC) $(CFLAGS) $(DEF) $(INC) -c -o $@ $<
 
 $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
-	@echo "Linking ELF binary: $(notdir $@)"
+	@echo "  LD      $(notdir $@)"
 	$(CMD_ECHO) $(LD) $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@ $^
 
-	@echo "Generating name list: $(BIN).sym"
+	@echo "  NM      $(BIN).sym"
 	$(CMD_ECHO) $(NM) -n $@ > $(BUILD_DIR)/$(BIN).sym
 
-	@echo "Generating disassembly: $(BIN).disasm"
+	@echo "  OBJDUMP $(BIN).disasm"
 	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(BUILD_DIR)/$(BIN).disasm
 
 .PHONY: clean
