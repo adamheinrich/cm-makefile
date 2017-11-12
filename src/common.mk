@@ -82,21 +82,19 @@ HELP_TEXT = Available targets:\n\
   all - Build with default configuration\n\
   clean - Remove build outputs
 
+# Desired outputs:
+OUTPUTS = $(BUILD_DIR)/$(BIN).hex \
+          $(BUILD_DIR)/$(BIN).bin \
+          $(BUILD_DIR)/$(BIN).sym \
+          $(BUILD_DIR)/$(BIN).disasm
+
 .PHONY: all
-all: $(BUILD_DIR) $(BUILD_DIR)/$(BIN).hex  $(BUILD_DIR)/$(BIN).bin
+all: $(BUILD_DIR) $(OUTPUTS)
 	@echo ""
 	$(CMD_ECHO) @$(SIZE) $(BUILD_DIR)/$(BIN).elf
 
 $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
-
-$(BUILD_DIR)/$(BIN).hex: $(BUILD_DIR)/$(BIN).elf
-	@echo "  IHEX    $(notdir $@)"
-	$(CMD_ECHO) $(OBJCOPY) -O ihex $< $@
-
-$(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
-	@echo "  BIN     $(notdir $@)"
-	$(CMD_ECHO) $(OBJCOPY) -O binary $< $@
 
 $(BUILD_DIR)/%.o: %.s
 	@echo "  AS      $(notdir $@)"
@@ -114,17 +112,26 @@ $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	@echo "  LD      $(notdir $@)"
 	$(CMD_ECHO) $(LD) $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@ $^
 
-	@echo "  NM      $(BIN).sym"
-	$(CMD_ECHO) $(NM) -n $@ > $(BUILD_DIR)/$(BIN).sym
+$(BUILD_DIR)/$(BIN).sym: $(BUILD_DIR)/$(BIN).elf
+	@echo "  NM      $(notdir $@)"
+	$(CMD_ECHO) $(NM) -n $< > $@
 
-	@echo "  OBJDUMP $(BIN).disasm"
-	$(CMD_ECHO) $(OBJDUMP) -S $@ > $(BUILD_DIR)/$(BIN).disasm
+$(BUILD_DIR)/$(BIN).disasm: $(BUILD_DIR)/$(BIN).elf
+	@echo "  OBJDUMP $(notdir $@)"
+	$(CMD_ECHO) $(OBJDUMP) -S $< > $@
+
+$(BUILD_DIR)/$(BIN).hex: $(BUILD_DIR)/$(BIN).elf
+	@echo "  IHEX    $(notdir $@)"
+	$(CMD_ECHO) $(OBJCOPY) -O ihex $< $@
+
+$(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
+	@echo "  BIN     $(notdir $@)"
+	$(CMD_ECHO) $(OBJCOPY) -O binary $< $@
 
 .PHONY: clean
 clean:
-	rm -f $(BUILD_DIR)/*.elf $(BUILD_DIR)/*.hex $(BUILD_DIR)/*.bin
-	rm -f $(BUILD_DIR)/*.map $(BUILD_DIR)/*.sym $(BUILD_DIR)/*.disasm
-	rm -f $(BUILD_DIR)/*.ini $(BUILD_DIR)/*.o
+	rm -f $(OUTPUTS)
+	rm -f $(BUILD_DIR)/*.map $(BUILD_DIR)/*.ini $(BUILD_DIR)/*.o
 
 .PHONY: help
 help:
