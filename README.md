@@ -1,8 +1,9 @@
-# ARM Cortex-M Makefile Template
+# CM-Makefile: Makefile template for Cortex-M projects
 
-Makefile template for Cortex-M projects using the [GCC ARM Embedded][1]
-toolchain. The template contains pre-configured examples for a few particular
-MCUs but it can be easily used with other vendors' SDKs as well.
+Makefile template for ARM Cortex-M projects using the [GCC ARM Embedded][1]
+toolchain. The template is meant to be included in project-specific Makefile.
+
+See repository [cm-makefile-examples][5] for usage examples.
 
 ## Dependencies
 
@@ -16,52 +17,40 @@ To successfully compile and debug the project, you need:
 
 Installation instructions are described in a [separate file](./INSTALL.md).
 
-## Configuration
-
-The configuration is quite straightforward. Use the following `Makefile`
-variables:
-
-- `INC`: include path
-- `SRC_ASM`: startup code (assembler, MCU specific)
-- `SRC_C`: CMSIS initialization code
-- `SRC_LD`: linker script (MCU specific)
-- `DEF`: Library-specific macros (`#define`)
-- `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
-  You can use one of the [built-in scripts][4] or create your own.
-
-### Configuration for a different target
-
-This template can be easily used with different MCU family, see a
-target-specific Makefile as an exmple. It's only necessary to obtain
-startup code and linker script (which is typically part of a SDK package
-provided by the MCU vencor) and configure the `ARCHFLAGS` variable to match its
-CPU architecture:
-
-- Cortex-M0: `-mcpu=cortex-m0` (the default option)
-- Cortex-M0+: `-mcpu=cortex-m0plus`
-- Cortex-M3: `-mcpu=cortex-m3`
-- Cortex-M4 (Soft FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp`
-- Cortex-M4 (Hard FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard`
-
 ## Usage
 
-To compile the project, simply run `make` in its `src directory`, e.g.:
+First, create `Makefile`. The Makefile should link to source files outside the
+project's source directory (such as libraries provided by the manufacturer) and
+include `*.mk` files from the CM-Makefile project. For example:
 
-	cd src/stm32-cube
-	make
+	BIN = hello                     # Name of the output binary
+	SDK_DIR = ../mcu-vendor         # Target-specific library
 
-To use a specific toolchain (other than the default `arm-none-eabi`), simply
-set the `CROSS_COMPILE` variable:
+	INC = -I$(SDK_DIR)/inc
+	SRC_ASM = $(SDK_DIR)/src/startup.S
+	SCR_C = $(SDK_DIR)/src/system.c
+	SRC_LD = $(SDK_DIR)/target.ld
 
-	make CROSS_COMPILE=/usr/local/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-
+	include cm-makefile/common.mk
+	include cm-makefile/openocd.mk  # For flash, debug and gdb targets
 
-The process will create `.elf` and `.hex` binaries in the `build` directory
-together with other files useful for debugging:
+See the [cm-makefile-examples][5] repository for real-world examples.
+
+Then simply run `make` to compile the project and `make flash` to upload it to
+the target.
+
+The process will create `.elf`, `.hex` and `.bin` binaries in the `build`
+directory together with other files useful for debugging:
 
 - `.disasm`: Disassembly output
 - `.sym`: Name list (useful to check memory layout)
 - `.map`: Linker map (useful to check linked object files, discarded sections,
   etc.)
+
+To use a specific toolchain (other than the default `arm-none-eabi`), simply
+set the `CROSS_COMPILE` variable:
+
+	make CROSS_COMPILE=/usr/local/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-
 
 ### Flashing and debugging
 
@@ -76,6 +65,36 @@ of `main()`.
 The Eclipse debugger has to be available as `cdtdebug`. If it isn't, simply
 change the `CDTDEBUG` variable.
 
+## Configuration
+
+The configuration is quite straightforward. Most of variables used in
+`common.mk` can be modified by the project-specific Makefile. For example:
+
+- `INC`: Include path for header files (`-I*.h`) or linker scripts (`-L*.ld`)
+- `SRC_ASM`: Assembly source files (`*.S`, `*.s`) outside the current directory
+  (e.g. target-specific startup code)
+- `SRC_C`: C source files (`*.c`) outside the current directory
+- `SRC_LD`: Linker script (`*.ld`)
+- `DEF`: Custom macros (`-DMACRO` equals to `#define MACRO`)
+- `ARCHFLAGS`: CPU architecture (see below)
+- `WARNFLAGS`: GCC [warning options][6]. You can define your own set of options
+  or disable the unwanted ones by appending `-Wno-*` flags
+- `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
+- `OPTFLAGS`: GCC [optimization options][8] (`-O3 -flto` by defualt)
+- `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
+  You can use one of the [built-in scripts][4] or create your own.
+
+### Configuration for a different target
+
+CM-Makefile can be easily used with a different CPU core than the default
+Cortex-M0. It's only necessary to configure the `ARCHFLAGS` variable:
+
+- Cortex-M0: `-mcpu=cortex-m0` (the default option)
+- Cortex-M0+: `-mcpu=cortex-m0plus`
+- Cortex-M3: `-mcpu=cortex-m3`
+- Cortex-M4 (Soft FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp`
+- Cortex-M4 (Hard FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard`
+
 ## License
 
 CM-Makefile is free software: you can redistribute it and/or modify it under the
@@ -89,3 +108,7 @@ See `COPYING` and `COPYING.LESSER` for details.
 [2]: http://openocd.org/
 [3]: https://wiki.eclipse.org/CDT/StandaloneDebugger
 [4]: https://github.com/ntfreak/openocd/tree/master/tcl/board
+[5]: https://github.com/adamheinrich/cm-makefile-examples
+[6]: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
+[7]: https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
+[8]: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
