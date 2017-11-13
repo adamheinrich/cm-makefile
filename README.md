@@ -86,6 +86,15 @@ of `main()`.
 The Eclipse debugger has to be available as `cdtdebug`. If it isn't, simply
 change the `CDTDEBUG` variable.
 
+## License
+
+CM-Makefile is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+See `COPYING` and `COPYING.LESSER` for details.
+
 [1]: https://launchpad.net/gcc-arm-embedded
 [2]: http://openocd.org/
 [3]: https://wiki.eclipse.org/CDT/StandaloneDebugger
