@@ -32,7 +32,6 @@ endif
 
 # Include directories
 INC += -I.
-INC_LD += .
 
 # ASM and C (e.g. startup) source files and linker script outside src directory
 SRC_ASM ?=
