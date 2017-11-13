@@ -14,17 +14,7 @@ To successfully compile and debug the project, you need:
 - [Eclipse CDT Stand-alone Debugger][3]
 - MCU vendor's HAL (start-up code, register definitions, ...)
 
-### Toolchain and OpenOCD installation on Ubuntu
-
-Both the toolchain and OpenOCD can be installed from Ubuntu packages:
-
-	sudo apt-get install gcc-arm-embedded openocd
-
-It is also possible to download a specific version of the toolchain directly
-from the [website][1]. In this case, it might be necessary to obtain 32-bit
-`libc` and `libncurses` (required by `gdb`):
-
-	sudo apt-get install libc6:i386 libncurses5:i386
+Installation instructions are described in a [separate file](./INSTALL.md).
 
 ## Configuration
 
