@@ -61,7 +61,7 @@ ASFLAGS = $(ARCHFLAGS)
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
 CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
-         -ffunction-sections -fdata-sections
+         -ffunction-sections -fdata-sections -fno-strict-aliasing
 
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
 LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -Wl,-Map=$(BUILD_DIR)/$(BIN).map\
