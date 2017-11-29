@@ -126,7 +126,7 @@ $(BUILD_DIR)/%.o: %.c
 
 $(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
 	@echo "  LD      $(notdir $@)"
-	$(CMD_ECHO) $(LD) $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@ $^
+	$(CMD_ECHO) $(LD) $^ $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@
 
 $(BUILD_DIR)/$(BIN).sym: $(BUILD_DIR)/$(BIN).elf
 	@echo "  NM      $(notdir $@)"
