@@ -151,7 +151,7 @@ $(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
 .PHONY: clean
 clean:
 	rm -f $(OUTPUTS)
-	rm -f $(BUILD_DIR)/*.map $(BUILD_DIR)/*.ini $(BUILD_DIR)/*.o
+	rm -f $(BUILD_DIR)/$(BIN).map $(BUILD_DIR)/$(BIN).ini $(BUILD_DIR)/*.o
 
 .PHONY: help
 help:
