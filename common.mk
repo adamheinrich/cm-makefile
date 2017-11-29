@@ -53,6 +53,9 @@ WARNFLAGS ?= -Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration \
              -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes \
              -Wconversion -Wdouble-promotion -Wfloat-conversion -pedantic
 
+# Use newlib-nano, include syscalls stubs (nosys)
+SPECSFLAGS ?= --specs=nano.specs --specs=nosys.specs
+
 # This should be only enabled during development:
 #WARNFLAGS += -Werror
 
@@ -61,11 +64,11 @@ ASFLAGS = $(ARCHFLAGS)
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
 CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
-         -ffunction-sections -fdata-sections -fno-strict-aliasing
+         -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
 
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
 LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -Wl,-Map=$(BUILD_DIR)/$(BIN).map\
-          -Wl,--gc-sections --specs=nano.specs --specs=nosys.specs
+          -Wl,--gc-sections $(SPECSFLAGS)
 
 # Generate object list from source files and add their dirs to search path
 SRC_ASM += $(wildcard *.s)
