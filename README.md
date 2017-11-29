@@ -31,6 +31,8 @@ include `*.mk` files from the CM-Makefile project. For example:
 	SCR_C = $(SDK_DIR)/src/system.c
 	SRC_LD = $(SDK_DIR)/target.ld
 
+	OPENOCD = openocd -f board/my_board.cfg
+
 	include cm-makefile/common.mk
 	include cm-makefile/openocd.mk  # For flash, debug and gdb targets
 
