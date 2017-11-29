@@ -63,6 +63,7 @@ ASFLAGS = $(ARCHFLAGS)
 
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
+# TODO: Add -fno-builtin?
 CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
 
@@ -127,7 +128,7 @@ $(BUILD_DIR)/%.o: %.c
 	@echo "  CC      $(notdir $@)"
 	$(CMD_ECHO) $(CC) $(CFLAGS) $(DEF) $(INC) -c -o $@ $<
 
-$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
+$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C) | $(SRC_LD)
 	@echo "  LD      $(notdir $@)"
 	$(CMD_ECHO) $(LD) $^ $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@
 
