@@ -46,7 +46,8 @@ CDTDEBUG ?= cdtdebug
 
 # Compiler and linker flags
 ARCHFLAGS ?= -mcpu=cortex-m0
-ARCHFLAGS += -mthumb -mabi=aapcs
+FPFLAGS ?= -mfloat-abi=soft
+ARCHFLAGS += -mthumb -mabi=aapcs $(FPFLAGS)
 DBGFLAGS ?= -ggdb
 OPTFLAGS ?= -O3 -flto
 WARNFLAGS ?= -Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration \

@@ -77,6 +77,7 @@ The configuration is quite straightforward. Most of variables used in
 - `SRC_LD`: Linker script (`*.ld`)
 - `DEF`: Custom macros (`-DMACRO` equals to `#define MACRO`)
 - `ARCHFLAGS`: CPU architecture (see below)
+- `FPFLAGS`: FLoating point configuration (see below)
 - `WARNFLAGS`: GCC [warning options][6]. You can define your own set of options
   or disable the unwanted ones by appending `-Wno-*` flags
 - `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
@@ -87,13 +88,16 @@ The configuration is quite straightforward. Most of variables used in
 ### Configuration for a different target
 
 CM-Makefile can be easily used with a different CPU core than the default
-Cortex-M0. It's only necessary to configure the `ARCHFLAGS` variable:
+Cortex-M0. It's only necessary to configure the `ARCHFLAGS` and `FPFLAGS`
+variables (`FPFLAGS` defaults to `-mfloat-abi=soft`):
 
-- Cortex-M0: `-mcpu=cortex-m0` (the default option)
-- Cortex-M0+: `-mcpu=cortex-m0plus`
-- Cortex-M3: `-mcpu=cortex-m3`
-- Cortex-M4 (Soft FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp`
-- Cortex-M4 (Hard FP): `-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard`
+| CPU                 | `ARCHFLAGS`           | `FPFLAGS`                              |
+|---------------------|-----------------------|----------------------------------------|
+| Cortex-M0 (default) | `-mcpu=cortex-m0`     | `-mfloat-abi=soft`                     |
+| Cortex-M0+          | `-mcpu=cortex-m0plus` | `-mfloat-abi=soft`                     |
+| Cortex-3            | `-mcpu=cortex-m3`     | `-mfloat-abi=soft`                     |
+| Cortex-M4 (Soft FP) | `-mcpu=cortex-m4`     | `-mfloat-abi=softfp -mfpu=fpv4-sp-d16` |
+| Cortex-M4 (Hard FP) | `-mcpu=cortex-m4`     | `-mfloat-abi=hard -mfpu=fpv4-sp-d16`   |
 
 ## License
 
