@@ -101,18 +101,28 @@ GDB := $(CROSS_COMPILE)gdb
 # Help message:
 HELP_TEXT = Available targets:\n\
   all - Build with default configuration\n\
-  clean - Remove build outputs
+  deps - Build dependencies (if specified)\n\
+  clean - Remove build outputs\n\
+  distclean - Remove build outputs as well as outputs of dependencies
 
 # Desired outputs:
-OUTPUTS = $(BUILD_DIR)/$(BIN).hex \
+OUTPUTS = $(BUILD_DIR)/$(BIN).elf \
+	  $(BUILD_DIR)/$(BIN).hex \
           $(BUILD_DIR)/$(BIN).bin \
           $(BUILD_DIR)/$(BIN).sym \
           $(BUILD_DIR)/$(BIN).disasm
 
+# Dependencies:
+DEPS ?=
+DEPS_CLEAN ?=
+
 .PHONY: all
-all: $(BUILD_DIR) $(OUTPUTS)
+all: deps $(BUILD_DIR) $(OUTPUTS)
 	@echo ""
 	$(CMD_ECHO) @$(SIZE) $(BUILD_DIR)/$(BIN).elf
+
+.PHONY: deps
+deps: $(DEPS)
 
 $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
@@ -153,6 +163,9 @@ $(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
 clean:
 	rm -f $(OUTPUTS)
 	rm -f $(BUILD_DIR)/$(BIN).map $(BUILD_DIR)/$(BIN).ini $(BUILD_DIR)/*.o
+
+.PHONY: distclean
+distclean: clean $(DEPS_CLEAN)
 
 .PHONY: help
 help:
