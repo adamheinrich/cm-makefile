@@ -117,12 +117,14 @@ DEPS ?=
 DEPS_CLEAN ?=
 
 .PHONY: all
-all: deps $(BUILD_DIR) $(OUTPUTS)
+all: deps $(BUILD_DIR)
+	@make -s $(OUTPUTS)
 	@echo ""
 	$(CMD_ECHO) @$(SIZE) $(BUILD_DIR)/$(BIN).elf
 
 .PHONY: deps
-deps: $(DEPS)
+deps:
+	@make -s $(DEPS)
 
 $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
@@ -165,7 +167,9 @@ clean:
 	rm -f $(BUILD_DIR)/$(BIN).map $(BUILD_DIR)/$(BIN).ini $(BUILD_DIR)/*.o
 
 .PHONY: distclean
-distclean: clean $(DEPS_CLEAN)
+distclean:
+	@make -s $(DEPS_CLEAN)
+	@make -s clean
 
 .PHONY: help
 help:

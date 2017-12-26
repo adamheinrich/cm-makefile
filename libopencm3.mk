@@ -35,6 +35,10 @@ HELP_TEXT += \n\
 LDFLAGS += -l$(subst lib,,$(subst .a,,$(OPENCM3_LIB)))
 LDFLAGS += -nostartfiles
 
+# Setup dependencies (to build libopencm3 automatically):
+DEPS += libopencm3
+DEPS_CLEAN += libopencm3_clean
+
 $(OPENCM3_DIR)/Makefile:
 	$(error Error: libopencm3 is not available. Run \
 		`git submodule update --init` to initialize submodules.)
