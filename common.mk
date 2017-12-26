@@ -120,7 +120,7 @@ DEPS_CLEAN ?=
 all: deps $(BUILD_DIR)
 	@make -s $(OUTPUTS)
 	@echo ""
-	$(CMD_ECHO) @$(SIZE) $(BUILD_DIR)/$(BIN).elf
+	$(CMD_ECHO) $(SIZE) $(BUILD_DIR)/$(BIN).elf
 
 .PHONY: deps
 deps:
