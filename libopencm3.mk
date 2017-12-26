@@ -31,6 +31,10 @@ HELP_TEXT += \n\
   libopencm3 - Build the libopencm3 library\n\
   libopencm3_clean - Remove files built in the libopencm3 folder
 
+# Setup linker flags required by libopencm3:
+LDFLAGS += -l$(subst lib,,$(subst .a,,$(OPENCM3_LIB)))
+LDFLAGS += -nostartfiles
+
 $(OPENCM3_DIR)/Makefile:
 	$(error Error: libopencm3 is not available. Run \
 		`git submodule update --init` to initialize submodules.)
