@@ -49,7 +49,7 @@ ARCHFLAGS ?= -mcpu=cortex-m0
 FPFLAGS ?= -mfloat-abi=soft
 ARCHFLAGS += -mthumb -mabi=aapcs $(FPFLAGS)
 DBGFLAGS ?= -ggdb
-OPTFLAGS ?= -O3 -flto
+OPTFLAGS ?= -O3
 WARNFLAGS ?= -Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration \
              -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes \
              -Wconversion -Wdouble-promotion -Wfloat-conversion -pedantic

@@ -83,7 +83,7 @@ The configuration is quite straightforward. Most of variables used in
 - `WARNFLAGS`: GCC [warning options][6]. You can define your own set of options
   or disable the unwanted ones by appending `-Wno-*` flags
 - `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
-- `OPTFLAGS`: GCC [optimization options][8] (`-O3 -flto` by defualt)
+- `OPTFLAGS`: GCC [optimization options][8] (`-O3` by defualt)
 - `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
   You can use one of the [built-in scripts][4] or create your own.
 
