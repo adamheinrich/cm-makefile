@@ -18,7 +18,9 @@
 ##
 
 OPENCM3_DIR ?= ./libopencm3
-OPENCM3_LIB ?= libopencm3_stm32f0.a
+OPENCM3_TARGET ?= stm32/f0
+
+OPENCM3_LIB = libopencm3_$(subst /,,$(OPENCM3_TARGET)).a
 
 OPENCM3_FLAGS  = V=$(V)
 OPENCM3_FLAGS += PREFIX=$(subst --,,$(CROSS_COMPILE)-)
@@ -34,7 +36,8 @@ $(OPENCM3_DIR)/Makefile:
 		`git submodule update --init` to initialize submodules.)
 
 $(OPENCM3_DIR)/lib/$(OPENCM3_LIB): $(OPENCM3_DIR)/Makefile
-	$(CMD_ECHO) $(MAKE) -C $(OPENCM3_DIR) $(OPENCM3_FLAGS)
+	$(CMD_ECHO) $(MAKE) -C $(OPENCM3_DIR) $(OPENCM3_FLAGS) \
+	lib/$(OPENCM3_TARGET)
 
 .PHONY: libopencm3
 libopencm3: $(OPENCM3_DIR)/lib/$(OPENCM3_LIB)
