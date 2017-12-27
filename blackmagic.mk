@@ -36,6 +36,7 @@ HELP_TEXT += \n\
   flash - Flash using Black Magic Probe\n\
   reset - Reset the target MCU using Black Magic Probe\n\
   erase - Erase flash (STM32 only) using Black Magic Probe\n\
+  power_<on/off> - Supply power to the target from Black Magic Probe\n\
   debug - Start debugger and connect to the GDB server
 
 OUTPUTS += $(BUILD_DIR)/$(BIN).gdb $(BUILD_DIR)/$(BIN).cdt
@@ -85,6 +86,18 @@ erase:
 	-ex 'attach 1' \
 	-ex 'monitor erase' \
 	-ex 'kill'
+
+.PHONY: power_on
+power_on:
+	$(CMD_ECHO) $(GDB) -nx --batch \
+	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
+	-ex 'monitor tpwr enable'
+
+.PHONY: power_off
+power_off:
+	$(CMD_ECHO) $(GDB) -nx --batch \
+	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
+	-ex 'monitor tpwr disable'
 
 .PHONY: debug
 debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).cdt
