@@ -124,7 +124,9 @@ all: deps $(BUILD_DIR)
 
 .PHONY: deps
 deps:
-	@$(MAKE) -s $(DEPS)
+	@if [ ! -z $(DEPS) ]; then  \
+		$(MAKE) -s $(DEPS); \
+	fi
 
 $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
@@ -168,7 +170,9 @@ clean:
 
 .PHONY: distclean
 distclean:
-	@$(MAKE) -s $(DEPS_CLEAN)
+	@if [ ! -z $(DEPS_CLEAN) ]; then \
+		$(MAKE) -s $(DEPS_CLEAN); \
+	fi
 	@$(MAKE) --no-print-directory clean
 
 .PHONY: help
