@@ -118,13 +118,13 @@ DEPS_CLEAN ?=
 
 .PHONY: all
 all: deps $(BUILD_DIR)
-	@make -s $(OUTPUTS)
+	@$(MAKE) -s $(OUTPUTS)
 	@echo ""
 	$(CMD_ECHO) $(SIZE) $(BUILD_DIR)/$(BIN).elf
 
 .PHONY: deps
 deps:
-	@make -s $(DEPS)
+	@$(MAKE) -s $(DEPS)
 
 $(BUILD_DIR):
 	$(CMD_ECHO) mkdir -p $(BUILD_DIR)
@@ -168,8 +168,8 @@ clean:
 
 .PHONY: distclean
 distclean:
-	@make -s $(DEPS_CLEAN)
-	@make -s clean
+	@$(MAKE) -s $(DEPS_CLEAN)
+	@$(MAKE) --no-print-directory clean
 
 .PHONY: help
 help:
