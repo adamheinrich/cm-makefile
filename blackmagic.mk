@@ -18,8 +18,9 @@
 ##
 
 # Black Magic Probe target configuration
-BLACKMAGIC_PORT ?= /dev/ttyACM0
+BLACKMAGIC_PATTERN ?= usb-Black_Sphere_Technologies_Black_Magic_Probe_*-if00
 BLACKMAGIC_TPWR ?= 0
+BLACKMAGIC_PORT ?= $(shell find /dev/serial/by-id -name $(BLACKMAGIC_PATTERN))
 
 BLACKMAGIC_GDBINIT ?= \
 	set mi-async on\n\
