@@ -33,8 +33,9 @@ include `*.mk` files from the CM-Makefile project. For example:
 
 	OPENOCD = openocd -f board/my_board.cfg
 
-	include cm-makefile/common.mk
+	include cm-makefile/config.mk
 	include cm-makefile/openocd.mk  # For flash, debug and gdb targets
+	include cm-makefile/rules.mk
 
 See the [cm-makefile-examples][5] repository for real-world examples.
 
@@ -70,7 +71,8 @@ change the `CDTDEBUG` variable.
 ## Configuration
 
 The configuration is quite straightforward. Most of variables used in
-`common.mk` can be modified by the project-specific Makefile. For example:
+`config.mk` and `rules.mk` can be modified by the project-specific Makefile.
+For example:
 
 - `INC`: Include path for header files (`-I*.h`) or linker scripts (`-L*.ld`)
 - `SRC_ASM`: Assembly source files (`*.S`, `*.s`) outside the current directory
