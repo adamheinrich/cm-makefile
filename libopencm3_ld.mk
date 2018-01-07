@@ -24,7 +24,8 @@ OPENCM3_DIR ?= ./libopencm3
 OPENCM3_LIB ?= libopencm3_stm32f0.a
 OPENCM3_DEVICE ?= stm32f030r8
 
-ifneq ($(wildcard $(OPENCM3_DIR)/lib/$(OPENCM3_LIB)),)
+ifneq ($(wildcard $(OPENCM3_DIR)/mk),)
+
 DEVICE = $(OPENCM3_DEVICE)
 
 -include $(OPENCM3_DIR)/mk/genlink-config.mk
@@ -34,4 +35,10 @@ Q ?= $(CMD_ECHO)
 OUTPUTS += $(LDSCRIPT)
 
 -include $(OPENCM3_DIR)/mk/genlink-rules.mk
+
+else
+
+$(error Error: libopencm3 is not available. Run `git submodule update --init` \
+	to initialize submodules)
+
 endif

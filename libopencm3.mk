@@ -41,7 +41,7 @@ DEPS_CLEAN += libopencm3_clean
 
 $(OPENCM3_DIR)/Makefile:
 	$(error Error: libopencm3 is not available. Run \
-		`git submodule update --init` to initialize submodules.)
+		`git submodule update --init` to initialize submodules)
 
 $(OPENCM3_DIR)/lib/$(OPENCM3_LIB): $(OPENCM3_DIR)/Makefile
 	$(CMD_ECHO) $(MAKE) -C $(OPENCM3_DIR) $(OPENCM3_FLAGS) \
