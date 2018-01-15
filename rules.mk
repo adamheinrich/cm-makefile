@@ -24,7 +24,7 @@ all: deps $(BUILD_DIR) $(OUTPUTS)
 
 .PHONY: deps
 deps:
-	@if [ ! -z $(DEPS) ]; then  \
+	@if [ ! -z "$(DEPS)" ]; then  \
 		$(MAKE) -s $(DEPS); \
 	fi
 
