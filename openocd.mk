@@ -26,6 +26,12 @@ HELP_TEXT += \n\
   gdb - Start OpenOCD as GDB server\n\
   debug - Start debugger and connect to the GDB server
 
+OUTPUTS += $(BUILD_DIR)/$(BIN).cdt
+
+$(BUILD_DIR)/$(BIN).cdt:
+	@echo "  ECHO    $(notdir $@)"
+	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)" > $@
+
 .PHONY: flash
 flash: $(BUILD_DIR)/$(BIN).hex
 	$(CMD_ECHO) $(OPENOCD) -c \
@@ -55,9 +61,7 @@ gdb: $(BUILD_DIR)/$(BIN).hex
 	reset halt"
 
 .PHONY: debug
-debug: $(BUILD_DIR)/$(BIN).elf
+debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).cdt
 	@echo "Starting cdtdebug with $(GDB)..."
-	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)" \
-	    > $(BUILD_DIR)/cdtdebug.ini
-	$(CMD_ECHO) $(CDTDEBUG) -pluginCustomization $(BUILD_DIR)/cdtdebug.ini \
-	    -r localhost:3333 -e $(realpath $^) &
+	$(CMD_ECHO) $(CDTDEBUG) -pluginCustomization $| -r localhost:3333 \
+	-e $(realpath $^) &
