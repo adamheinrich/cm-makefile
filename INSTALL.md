@@ -6,9 +6,11 @@ This document describes how to install tools required by CM-Makefile.
 
 ### GCC ARM Embedded Toolchain
 
-The toolchain can be installed from Ubuntu repository:
+The toolchain can be installed from PPA:
 
-	sudo apt-get install gcc-arm-embedded openocd
+	sudo add-apt-repository ppa:team-gcc-arm-embedded/ppa
+	suto apt-get update
+	sudo apt-get install gcc-arm-embedded
 
 It is also possible to download a specific version of the toolchain directly
 from the [website][1]. In this case, it might be necessary to obtain 32-bit
