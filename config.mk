@@ -68,6 +68,15 @@ ASFLAGS = $(ARCHFLAGS)
 CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
 
+# CXX: Similar configuration as CC. Remove C-only warning flags, omit
+# exceptions and run-time type information
+CXXWARNFLAGS = $(filter-out -Wimplicit-function-declaration \
+                            -Wstrict-prototypes \
+                            -Wmissing-prototypes,$(WARNFLAGS))
+CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) -std=gnu++11 \
+         -ffunction-sections -fdata-sections -fno-strict-aliasing \
+         -fno-rtti -fno-exceptions $(SPECSFLAGS)
+
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
 LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -Wl,-Map=$(BUILD_DIR)/$(BIN).map\
           -Wl,--gc-sections $(SPECSFLAGS)
@@ -86,17 +95,29 @@ FILENAMES_C = $(notdir $(SRC_C))
 OBJS_C = $(addprefix $(BUILD_DIR)/, $(FILENAMES_C:.c=.o))
 vpath %.c $(dir $(SRC_C))
 
+SRC_CXX += $(wildcard *.cpp)
+FILENAMES_CXX = $(notdir $(SRC_CXX))
+OBJS_CXX = $(addprefix $(BUILD_DIR)/, $(FILENAMES_CXX:.cpp=.o))
+vpath %.cpp $(dir $(SRC_CXX))
+
 # Tools selection
 CROSS_COMPILE ?= arm-none-eabi-
 
 CC := $(CROSS_COMPILE)gcc
+CXX := $(CROSS_COMPILE)g++
 AS := $(CROSS_COMPILE)gcc
-LD := $(CROSS_COMPILE)gcc
 NM := $(CROSS_COMPILE)nm
 OBJCOPY := $(CROSS_COMPILE)objcopy
 OBJDUMP := $(CROSS_COMPILE)objdump
 SIZE := $(CROSS_COMPILE)size
 GDB := $(CROSS_COMPILE)gdb
+
+# Use g++ as a linker if there are any C++ object files:
+ifeq ($(OBJS_CXX),)
+LD := $(CROSS_COMPILE)gcc
+else
+LD := $(CROSS_COMPILE)g++
+endif
 
 # Help message:
 HELP_TEXT = Available targets:\n\

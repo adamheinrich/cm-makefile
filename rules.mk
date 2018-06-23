@@ -43,7 +43,11 @@ $(BUILD_DIR)/%.o: %.c | deps
 	@echo "  CC      $(notdir $@)"
 	$(CMD_ECHO) $(CC) $(CFLAGS) $(DEF) $(INC) -c -o $@ $<
 
-$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C) | $(SRC_LD)
+$(BUILD_DIR)/%.o: %.cpp | deps
+	@echo "  CXX     $(notdir $@)"
+	$(CMD_ECHO) $(CXX) $(CXXFLAGS) $(DEF) $(INC) -c -o $@ $<
+
+$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C) $(OBJS_CXX) | $(SRC_LD)
 	@echo "  LD      $(notdir $@)"
 	$(CMD_ECHO) $(LD) $^ $(LDFLAGS) $(INC) -T$(SRC_LD) -o $@
 
