@@ -65,7 +65,7 @@ ASFLAGS = $(ARCHFLAGS)
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
 # TODO: Add -fno-builtin?
-CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
+CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -MD -MP -std=gnu99 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
 
 # CXX: Similar configuration as CC. Remove C-only warning flags, omit
@@ -73,7 +73,7 @@ CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -std=gnu99 \
 CXXWARNFLAGS = $(filter-out -Wimplicit-function-declaration \
                             -Wstrict-prototypes \
                             -Wmissing-prototypes,$(WARNFLAGS))
-CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) -std=gnu++11 \
+CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) -MD -MP -std=gnu++11 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing \
          -fno-rtti -fno-exceptions $(SPECSFLAGS)
 
