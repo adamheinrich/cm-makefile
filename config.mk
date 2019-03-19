@@ -53,6 +53,7 @@ OPTFLAGS ?= -O3
 WARNFLAGS ?= -Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration \
              -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes \
              -Wconversion -Wdouble-promotion -Wfloat-conversion -pedantic
+PREPFLAGS ?= -MD -MP
 
 # Use newlib-nano, include syscalls stubs (nosys)
 SPECSFLAGS ?= --specs=nano.specs --specs=nosys.specs
@@ -65,7 +66,7 @@ ASFLAGS = $(ARCHFLAGS)
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
 # TODO: Add -fno-builtin?
-CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -MD -MP -std=gnu99 \
+CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) $(PREPFLAGS) -std=gnu99 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
 
 # CXX: Similar configuration as CC. Remove C-only warning flags, omit
@@ -73,7 +74,7 @@ CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) -MD -MP -std=gnu99 \
 CXXWARNFLAGS = $(filter-out -Wimplicit-function-declaration \
                             -Wstrict-prototypes \
                             -Wmissing-prototypes,$(WARNFLAGS))
-CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) -MD -MP -std=gnu++11 \
+CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) $(PREPFLAGS) -std=gnu++11 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing \
          -fno-rtti -fno-exceptions $(SPECSFLAGS)
 

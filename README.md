@@ -86,6 +86,7 @@ For example:
   or disable the unwanted ones by appending `-Wno-*` flags
 - `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
 - `OPTFLAGS`: GCC [optimization options][8] (`-O3` by defualt)
+- `PREPFLAGS`: GCC [preprocessor options][9] (`-MD -MP` by defualt)
 - `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
   You can use one of the [built-in scripts][4] or create your own.
 
@@ -120,3 +121,4 @@ See `COPYING` and `COPYING.LESSER` for details.
 [6]: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
 [7]: https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
 [8]: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+[9]: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
