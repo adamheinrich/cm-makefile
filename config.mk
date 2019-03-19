@@ -66,21 +66,27 @@ ASFLAGS = $(ARCHFLAGS)
 # CC: Place functions and data into separate sections to allow dead code removal
 # by the linker (-f*-sections)
 # TODO: Add -fno-builtin?
-CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) $(PREPFLAGS) -std=gnu99 \
-         -ffunction-sections -fdata-sections -fno-strict-aliasing $(SPECSFLAGS)
+CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) $(PREPFLAGS) \
+         -std=gnu99 \
+         -ffunction-sections -fdata-sections -fno-strict-aliasing \
+         $(SPECSFLAGS)
 
 # CXX: Similar configuration as CC. Remove C-only warning flags, omit
 # exceptions and run-time type information
 CXXWARNFLAGS = $(filter-out -Wimplicit-function-declaration \
                             -Wstrict-prototypes \
                             -Wmissing-prototypes,$(WARNFLAGS))
-CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) $(PREPFLAGS) -std=gnu++11 \
+
+CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) $(PREPFLAGS) \
+         -std=gnu++11 \
          -ffunction-sections -fdata-sections -fno-strict-aliasing \
-         -fno-rtti -fno-exceptions $(SPECSFLAGS)
+         -fno-rtti -fno-exceptions \
+         $(SPECSFLAGS)
 
 # LD: Remove unused sections, link with newlib-nano implementation, generate map
-LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) -Wl,-Map=$(BUILD_DIR)/$(BIN).map\
-          -Wl,--gc-sections $(SPECSFLAGS)
+LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) \
+          -Wl,-Map=$(BUILD_DIR)/$(BIN).map -Wl,--gc-sections \
+          $(SPECSFLAGS)
 
 # Generate object list from source files and add their dirs to search path
 SRC_ASM += $(wildcard *.s)
