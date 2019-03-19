@@ -67,6 +67,9 @@ $(BUILD_DIR)/$(BIN).bin: $(BUILD_DIR)/$(BIN).elf
 	@echo "  BIN     $(notdir $@)"
 	$(CMD_ECHO) $(OBJCOPY) -O binary $< $@
 
+-include $(addprefix $(BUILD_DIR)/, $(FILENAMES_C:.c=.d))
+-include $(addprefix $(BUILD_DIR)/, $(FILENAMES_CXX:.cpp=.d))
+
 .PHONY: clean
 clean:
 	rm -f $(OUTPUTS)
