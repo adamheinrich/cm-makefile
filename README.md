@@ -11,9 +11,12 @@ To successfully compile and debug the project, you need:
 
 - Linux desktop (OS X should work as well)
 - [GCC ARM Embedded][1] toolchain
+- MCU vendor's HAL (start-up code, register definitions, ...)
+
+Optional software:
+
 - [OpenOCD][2] debugger
 - [Eclipse CDT Stand-alone Debugger][3]
-- MCU vendor's HAL (start-up code, register definitions, ...)
 
 Installation instructions are described in a [separate file](./INSTALL.md).
 
