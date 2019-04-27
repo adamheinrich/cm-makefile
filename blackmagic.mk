@@ -26,6 +26,7 @@ BLACKMAGIC_GDBINIT ?= \
 	set mi-async on\n\
 	target extended-remote $(BLACKMAGIC_PORT)\n\
 	set confirm off\n\
+	set mem inaccessible-by-default off\n\
 	monitor version\n\
 	$(if $(filter 1,$(BLACKMAGIC_AUTO_TPWR)),,\#)monitor tpwr enable\n\
 	monitor swdp_scan\n\
