@@ -61,12 +61,12 @@ To flash the program using OpenOCD, run `make flash`. To reset the CPU, run
 `make reset`.
 
 To debug the project, run `make gdb` (which starts OpenOCD's GDB server)
-followed by `make debug` in a different terminal (which starts the Eclipse
-debugger). The GDB is configured to stop at a breakpoint placed at the beginning
-of `main()`.
+followed by `make debug` in a different terminal (which starts GDB in TUI
+mode).
 
-The Eclipse debugger has to be available as `cdtdebug`. If it isn't, simply
-change the `CDTDEBUG` variable.
+It is also possible to use the Eclipse standalone debugger using
+`make cdtdebut`. The debugger has to be available as `cdtdebug`. If it isn't,
+simply change the `CDTDEBUG` variable.
 
 ## Configuration
 

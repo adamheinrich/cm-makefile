@@ -39,15 +39,16 @@ HELP_TEXT += \n\
   reset - Reset the target MCU using Black Magic Probe\n\
   erase - Erase flash (STM32 only) using Black Magic Probe\n\
   power_<on/off> - Supply power to the target from Black Magic Probe\n\
-  debug - Start debugger and connect to the GDB server
+  cdtdebug - Start debugger (cdtdebug) and connect to the GDB server\n\
+  debug - Start debugger (gdb -tui) and connect to the GDB server
 
-OUTPUTS += $(BUILD_DIR)/$(BIN).gdb $(BUILD_DIR)/$(BIN).cdt
+OUTPUTS += $(BUILD_DIR)/$(BIN).bmp.gdb $(BUILD_DIR)/$(BIN).bmp.cdt
 
-$(BUILD_DIR)/$(BIN).gdb:
+$(BUILD_DIR)/$(BIN).bmp.gdb:
 	@echo "  ECHO    $(notdir $@)"
 	$(CMD_ECHO) echo "$(BLACKMAGIC_GDBINIT)" > $@
 
-$(BUILD_DIR)/$(BIN).cdt: $(BUILD_DIR)/$(BIN).gdb
+$(BUILD_DIR)/$(BIN).bmp.cdt: $(BUILD_DIR)/$(BIN).bmp.gdb
 	@echo "  ECHO    $(notdir $@)"
 	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)\n"\
 	"org.eclipse.cdt.dsf.gdb/defaultGdbInit=$(realpath $^)\n" > $@
@@ -101,7 +102,11 @@ power_off:
 	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
 	-ex 'monitor tpwr disable'
 
-.PHONY: debug
-debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).cdt
+.PHONY: cdtdebug
+cdtdebug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).bmp.cdt
 	@echo "Starting cdtdebug with $(GDB)..."
 	$(CMD_ECHO) $(CDTDEBUG) -pluginCustomization $| -e $(realpath $^) &
+
+.PHONY: debug
+debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).bmp.gdb
+	$(CMD_ECHO) $(GDB) -tui -x $| $^

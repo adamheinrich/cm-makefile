@@ -20,15 +20,24 @@
 # OpenOCD target configuration
 OPENOCD ?= openocd -f board/st_nucleo_f0.cfg
 
+OPENOCD_GDBINIT ?= \
+	target remote localhost:3333\n\
+	set mem inaccessible-by-default off
+
 HELP_TEXT += \n\
   flash - Flash using OpenOCD\n\
   reset - Reset the target MCU using OpenOCD\n\
   gdb - Start OpenOCD as GDB server\n\
-  debug - Start debugger and connect to the GDB server
+  cdtdebug - Start debugger (cdtdebug) and connect to the GDB server\n\
+  debug - Start debugger (gdb -tui) and connect to the GDB server
 
-OUTPUTS += $(BUILD_DIR)/$(BIN).cdt
+OUTPUTS += $(BUILD_DIR)/$(BIN).openocd.gdb $(BUILD_DIR)/$(BIN).openocd.cdt
 
-$(BUILD_DIR)/$(BIN).cdt:
+$(BUILD_DIR)/$(BIN).openocd.gdb:
+	@echo "  ECHO    $(notdir $@)"
+	$(CMD_ECHO) echo "$(OPENOCD_GDBINIT)" > $@
+
+$(BUILD_DIR)/$(BIN).openocd.cdt:
 	@echo "  ECHO    $(notdir $@)"
 	$(CMD_ECHO) echo "org.eclipse.cdt.dsf.gdb/defaultGdbCommand=$(GDB)" > $@
 
@@ -60,8 +69,12 @@ gdb: $(BUILD_DIR)/$(BIN).hex
 	flash write_image erase $^; \
 	reset halt"
 
-.PHONY: debug
-debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).cdt
+.PHONY: cdtdebug
+cdtdebug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).openocd.cdt
 	@echo "Starting cdtdebug with $(GDB)..."
 	$(CMD_ECHO) $(CDTDEBUG) -pluginCustomization $| -r localhost:3333 \
-	-e $(realpath $^) &
+				-e $(realpath $^) &
+
+.PHONY: debug
+debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).openocd.gdb
+	$(CMD_ECHO) $(GDB) -tui -x $| $^
