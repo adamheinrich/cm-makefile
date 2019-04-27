@@ -113,7 +113,7 @@ version.
 
 See `COPYING` and `COPYING.LESSER` for details.
 
-[1]: https://launchpad.net/gcc-arm-embedded
+[1]: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
 [2]: http://openocd.org/
 [3]: https://wiki.eclipse.org/CDT/StandaloneDebugger
 [4]: https://github.com/ntfreak/openocd/tree/master/tcl/board
