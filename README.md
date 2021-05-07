@@ -60,8 +60,13 @@ set the `CROSS_COMPILE` variable:
 
 ### Flashing and debugging
 
-To flash the program using OpenOCD, run `make flash`. To reset the CPU, run
-`make reset`.
+To flash the program into the target device, run `make flash`.
+To reset the CPU, run `make reset`.
+
+Three different flasher implementations are provided:
+
+- OpenOCD (`openocd.mk`)
+- Black Magic Probe
 
 To debug the project, run `make gdb` (which starts OpenOCD's GDB server)
 followed by `make debug` in a different terminal (which starts GDB in TUI
@@ -90,8 +95,18 @@ For example:
 - `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
 - `OPTFLAGS`: GCC [optimization options][8] (`-O3` by defualt)
 - `PREPFLAGS`: GCC [preprocessor options][9] (`-MD -MP` by defualt)
+
+### Configuraiton specific to different debug probes
+
+For `openocd.mk`:
+
 - `OPENOCD`: OpenOCD command (with script selection) to set up debug session.
   You can use one of the [built-in scripts][4] or create your own.
+
+For `blackmagic.mk`:
+
+- `BLACKMAGIC_PORT`: Serial port to be used for the Black Magic Probe
+- `BLACKMAGIC_AUTO_TPWR`: Automatically enable target power (`0` by default)
 
 ### Configuration for a different target
 
