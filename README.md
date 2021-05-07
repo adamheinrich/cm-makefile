@@ -17,6 +17,7 @@ Optional software:
 
 - [OpenOCD][2] debugger
 - [Eclipse CDT Stand-alone Debugger][3]
+- [Segger J-Link Software and Documentation Pack][10]
 
 Installation instructions are described in a [separate file](./INSTALL.md).
 
@@ -67,6 +68,7 @@ Three different flasher implementations are provided:
 
 - OpenOCD (`openocd.mk`)
 - Black Magic Probe
+- J-Link (`jlink.mk`)
 
 To debug the project, run `make gdb` (which starts OpenOCD's GDB server)
 followed by `make debug` in a different terminal (which starts GDB in TUI
@@ -108,6 +110,11 @@ For `blackmagic.mk`:
 - `BLACKMAGIC_PORT`: Serial port to be used for the Black Magic Probe
 - `BLACKMAGIC_AUTO_TPWR`: Automatically enable target power (`0` by default)
 
+For `jlink.mk`:
+
+- `JLINK_DEVICE`: Target device (`Cortex-M0` by default)
+- `JLINK_SPEED`: Programming speed in Hz (`1000` by default)
+
 ### Configuration for a different target
 
 CM-Makefile can be easily used with a different CPU core than the default
@@ -140,3 +147,4 @@ See `COPYING` and `COPYING.LESSER` for details.
 [7]: https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
 [8]: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 [9]: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
+[10]: https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack
