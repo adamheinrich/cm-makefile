@@ -1,6 +1,6 @@
 # CM-Makefile: Makefile template for Cortex-M projects
 
-Makefile template for ARM Cortex-M projects using the [GCC ARM Embedded][1]
+Makefile template for ARM Cortex-M projects using the [GNU Arm Embedded][1]
 toolchain. The template is meant to be included in project-specific Makefile.
 
 See repository [cm-makefile-examples][5] for usage examples.
