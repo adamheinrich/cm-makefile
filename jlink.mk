@@ -35,7 +35,8 @@ HELP_TEXT += \n\
   erase - Erase flash using J-Link\n\
   gdb - Start J-Link GDB server\n\
   cdtdebug - Start debugger (cdtdebug) and connect to the GDB server\n\
-  debug - Start debugger (gdb -tui) and connect to the GDB server
+  debug - Start debugger (gdb -tui) and connect to the GDB server\n\
+  rtt - Start J-Link RTT server
 
 $(BUILD_DIR)/$(BIN).jlink.gdb:
 	@echo "  ECHO    $(notdir $@)"
@@ -81,3 +82,8 @@ cdtdebug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).jlink.cdt
 .PHONY: debug
 debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).jlink.gdb
 	$(CMD_ECHO) $(GDB) -tui -x $| $^
+
+.PHONY: rtt
+rtt:
+	$(JLINK_EXE) $(JLINK_FLAGS) -autoconnect 1
+	$(CMD_ECHO) echo ""
