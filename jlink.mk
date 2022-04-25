@@ -21,7 +21,7 @@
 JLINK_DEVICE ?= Cortex-M0
 JLINK_SPEED ?= 1000
 
-JLINK_FLAGS = -device $(JLINK_DEVICE) -if swd -speed $(JLINK_SPEED)
+JLINK_FLAGS = -device $(JLINK_DEVICE) -if swd -speed $(JLINK_SPEED) -exitonerror 1
 JLINK_EXE = JLinkExe -nogui 1
 JLINK_GDB = JLinkGDBServer -nogui 1
 
