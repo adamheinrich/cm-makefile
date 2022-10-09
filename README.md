@@ -108,7 +108,6 @@ For `openocd.mk`:
 For `blackmagic.mk`:
 
 - `BLACKMAGIC_PORT`: Serial port to be used for the Black Magic Probe
-- `BLACKMAGIC_AUTO_TPWR`: Automatically enable target power (`0` by default)
 
 For `jlink.mk`:
 

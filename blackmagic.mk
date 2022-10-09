@@ -20,7 +20,6 @@
 # Black Magic Probe target configuration
 BLACKMAGIC_PATTERN ?= usb-Black_Sphere_Technologies_Black_Magic_Probe_*-if00
 BLACKMAGIC_PORT ?= $(wildcard /dev/serial/by-id/$(BLACKMAGIC_PATTERN))
-BLACKMAGIC_AUTO_TPWR ?= 0
 
 BLACKMAGIC_GDBINIT ?= \
 	set mi-async on\n\
@@ -28,7 +27,6 @@ BLACKMAGIC_GDBINIT ?= \
 	set confirm off\n\
 	set mem inaccessible-by-default off\n\
 	monitor version\n\
-	$(if $(filter 1,$(BLACKMAGIC_AUTO_TPWR)),,\#)monitor tpwr enable\n\
 	monitor swdp_scan\n\
 	attach 1\n\
 	file $(realpath $(BUILD_DIR)/$(BIN).elf)\n\
@@ -59,7 +57,6 @@ flash: $(BUILD_DIR)/$(BIN).hex
 	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
 	-ex 'set confirm off' \
 	-ex 'monitor version' \
-	$(if $(filter 1,$(BLACKMAGIC_AUTO_TPWR)),-ex 'monitor tpwr enable') \
 	-ex 'monitor swdp_scan' \
 	-ex 'attach 1' \
 	-ex 'load' \
@@ -73,7 +70,6 @@ reset:
 	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
 	-ex 'set confirm off' \
 	-ex 'monitor version' \
-	$(if $(filter 1,$(BLACKMAGIC_AUTO_TPWR)),-ex 'monitor tpwr enable') \
 	-ex 'monitor swdp_scan' \
 	-ex 'attach 1' \
 	-ex 'kill'
@@ -84,7 +80,6 @@ erase:
 	-ex 'target extended-remote $(BLACKMAGIC_PORT)' \
 	-ex 'set confirm off' \
 	-ex 'monitor version' \
-	$(if $(filter 1,$(BLACKMAGIC_AUTO_TPWR)),-ex 'monitor tpwr enable') \
 	-ex 'monitor swdp_scan' \
 	-ex 'attach 1' \
 	-ex 'monitor erase' \
