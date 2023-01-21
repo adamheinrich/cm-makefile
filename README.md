@@ -1,7 +1,7 @@
 # CM-Makefile: Makefile template for Cortex-M projects
 
-Makefile template for ARM Cortex-M projects using the [GNU Arm Embedded][1]
-toolchain. The template is meant to be included in project-specific Makefile.
+Makefile template for ARM Cortex-M projects using the [Arm GNU Toolchain][1].
+The template is meant to be included in project-specific Makefile.
 
 See repository [cm-makefile-examples][5] for usage examples.
 
@@ -137,7 +137,7 @@ version.
 
 See `COPYING` and `COPYING.LESSER` for details.
 
-[1]: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
+[1]: https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain
 [2]: http://openocd.org/
 [3]: https://wiki.eclipse.org/CDT/StandaloneDebugger
 [4]: https://github.com/ntfreak/openocd/tree/master/tcl/board
