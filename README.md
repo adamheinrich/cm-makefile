@@ -75,7 +75,7 @@ followed by `make debug` in a different terminal (which starts GDB in TUI
 mode).
 
 It is also possible to use the Eclipse standalone debugger using
-`make cdtdebut`. The debugger has to be available as `cdtdebug`. If it isn't,
+`make cdtdebug`. The debugger has to be available as `cdtdebug`. If it isn't,
 simply change the `CDTDEBUG` variable.
 
 If needed, it is possible to provide a custom gdb executable by setting the
