@@ -136,9 +136,9 @@ HELP_TEXT = Available targets:\n\
 # Desired outputs:
 OUTPUTS = $(BUILD_DIR)/$(BIN).elf \
 	  $(BUILD_DIR)/$(BIN).hex \
-          $(BUILD_DIR)/$(BIN).bin \
-          $(BUILD_DIR)/$(BIN).sym \
-          $(BUILD_DIR)/$(BIN).disasm
+	  $(BUILD_DIR)/$(BIN).bin \
+	  $(BUILD_DIR)/$(BIN).sym \
+	  $(BUILD_DIR)/$(BIN).disasm
 
 # Dependencies:
 DEPS ?=
