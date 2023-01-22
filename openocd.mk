@@ -29,7 +29,8 @@ HELP_TEXT += \n\
   reset - Reset the target MCU using OpenOCD\n\
   gdb - Start OpenOCD as GDB server\n\
   cdtdebug - Start debugger (cdtdebug) and connect to the GDB server\n\
-  debug - Start debugger (gdb -tui) and connect to the GDB server
+  debug - Start debugger (gdb -tui) and connect to the GDB server\n\
+  rtt - Start RTT server
 
 OUTPUTS += $(BUILD_DIR)/$(BIN).openocd.gdb $(BUILD_DIR)/$(BIN).openocd.cdt
 
@@ -78,3 +79,12 @@ cdtdebug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).openocd.cdt
 .PHONY: debug
 debug: $(BUILD_DIR)/$(BIN).elf | $(BUILD_DIR)/$(BIN).openocd.gdb
 	$(CMD_ECHO) $(GDB) -tui -x $| $^
+
+.PHONY: rtt
+rtt:
+	$(CMD_ECHO) $(OPENOCD) \
+	-c "init" \
+	-c 'rtt setup 0x20000000 0x8000 "SEGGER RTT"' \
+	-c "rtt start" \
+	-c "rtt channels" \
+	-c "rtt server start 19021 0"

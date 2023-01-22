@@ -78,6 +78,9 @@ It is also possible to use the Eclipse standalone debugger using
 `make cdtdebug`. The debugger has to be available as `cdtdebug`. If it isn't,
 simply change the `CDTDEBUG` variable.
 
+J-Link and OpenOCD probes support `make rtt` which starts a RTT server.
+The RTT output can be captured using `JLinkRTTClient` or `nc localhost 19021`.
+
 If needed, it is possible to provide a custom gdb executable by setting the
 `GDB` variable:
 
