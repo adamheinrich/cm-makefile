@@ -117,7 +117,7 @@ NM := $(CROSS_COMPILE)nm
 OBJCOPY := $(CROSS_COMPILE)objcopy
 OBJDUMP := $(CROSS_COMPILE)objdump
 SIZE := $(CROSS_COMPILE)size
-GDB := $(CROSS_COMPILE)gdb
+GDB ?= $(CROSS_COMPILE)gdb
 
 # Use g++ as a linker if there are any C++ object files:
 ifeq ($(OBJS_CXX),)
