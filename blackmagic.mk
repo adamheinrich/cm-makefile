@@ -18,7 +18,7 @@
 ##
 
 # Black Magic Probe target configuration
-BLACKMAGIC_PATTERN ?= usb-Black_Sphere_Technologies_Black_Magic_Probe_*-if00
+BLACKMAGIC_PATTERN ?= usb-Black_Magic_Debug_Black_Magic_Probe_*-if00
 BLACKMAGIC_PORT ?= $(wildcard /dev/serial/by-id/$(BLACKMAGIC_PATTERN))
 
 BLACKMAGIC_GDBINIT ?= \
