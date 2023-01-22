@@ -49,6 +49,8 @@ CDTDEBUG ?= cdtdebug
 ARCHFLAGS ?= -mcpu=cortex-m0
 FPFLAGS ?= -mfloat-abi=soft
 ARCHFLAGS += -mthumb -mabi=aapcs $(FPFLAGS)
+STDFLAGS ?= -std=gnu99
+CXXSTDFLAGS ?= -std=gnu++11
 DBGFLAGS ?= -ggdb
 OPTFLAGS ?= -O3
 WARNFLAGS ?= -Wall -Wextra -Wundef -Wshadow -Wimplicit-function-declaration \
@@ -68,7 +70,7 @@ ASFLAGS = $(ARCHFLAGS)
 # by the linker (-f*-sections)
 # TODO: Add -fno-builtin?
 CFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(WARNFLAGS) $(PREPFLAGS) \
-         -std=gnu99 \
+         $(STDFLAGS) \
          -ffunction-sections -fdata-sections -fno-strict-aliasing \
          $(SPECSFLAGS)
 
@@ -79,7 +81,7 @@ CXXWARNFLAGS = $(filter-out -Wimplicit-function-declaration \
                             -Wmissing-prototypes,$(WARNFLAGS))
 
 CXXFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) $(CXXWARNFLAGS) $(PREPFLAGS) \
-         -std=gnu++11 \
+         $(CXXSTDFLAGS) \
          -ffunction-sections -fdata-sections -fno-strict-aliasing \
          -fno-rtti -fno-exceptions \
          $(SPECSFLAGS)

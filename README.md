@@ -17,7 +17,7 @@ Optional software:
 
 - [OpenOCD][2] debugger
 - [Eclipse CDT Stand-alone Debugger][3]
-- [Segger J-Link Software and Documentation Pack][10]
+- [Segger J-Link Software and Documentation Pack][12]
 
 Installation instructions are described in a [separate file](./INSTALL.md).
 
@@ -105,6 +105,8 @@ For example:
 - `DBGFLAGS`: GCC [debugging options][7] (`-ggdb` by defualt)
 - `OPTFLAGS`: GCC [optimization options][8] (`-O3` by defualt)
 - `PREPFLAGS`: GCC [preprocessor options][9] (`-MD -MP` by defualt)
+- `STDFLAGS`: GCC [C dialect options][10] (`-std=gnu99` by default)
+- `CXXSTDFLAGS`: GCC [C++ dialect options][11] (`-std=gnu++11` by default)
 
 ### Configuraiton specific to different debug probes
 
@@ -154,4 +156,6 @@ See `COPYING` and `COPYING.LESSER` for details.
 [7]: https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
 [8]: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 [9]: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
-[10]: https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack
+[10]: https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html
+[11]: https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html
+[12]: https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack
