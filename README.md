@@ -89,10 +89,13 @@ The configuration is quite straightforward. Most of variables used in
 `config.mk` and `rules.mk` can be modified by the project-specific Makefile.
 For example:
 
+- `SRC_DIR`: The main directory where source files are located (`.` by default)
+- `BUILD_DIR`: The directory where object files and binaries are stored
+  (`./build` by default)
 - `INC`: Include path for header files (`-I*.h`) or linker scripts (`-L*.ld`)
-- `SRC_ASM`: Assembly source files (`*.S`, `*.s`) outside the current directory
-  (e.g. target-specific startup code)
-- `SRC_C`: C source files (`*.c`) outside the current directory
+- `SRC_ASM`: Assembly source files (`*.S`, `*.s`) outside the main `SRC_DIR`
+  directory (e.g. target-specific startup code)
+- `SRC_C`: C source files (`*.c`) outside the main `SRC_DIR` directory
 - `SRC_LD`: Linker script (`*.ld`)
 - `DEF`: Custom macros (`-DMACRO` equals to `#define MACRO`)
 - `ARCHFLAGS`: CPU architecture (see below)

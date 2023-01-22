@@ -20,6 +20,7 @@
 # Project name and build directory
 BIN ?= template
 BUILD_DIR ?= ./build
+SRC_DIR ?= .
 
 # Verbosity: Set V=1 to display command echo
 V ?= 0
@@ -31,7 +32,7 @@ else
 endif
 
 # Include directories
-INC += -I.
+INC += -I$(SRC_DIR)
 
 # ASM and C (e.g. startup) source files and linker script outside src directory
 SRC_ASM ?=
@@ -89,20 +90,20 @@ LDFLAGS = $(ARCHFLAGS) $(OPTFLAGS) $(DBGFLAGS) \
           $(SPECSFLAGS)
 
 # Generate object list from source files and add their dirs to search path
-SRC_ASM += $(wildcard *.s)
-SRC_ASM += $(wildcard *.S)
+SRC_ASM += $(wildcard $(SRC_DIR)/*.s)
+SRC_ASM += $(wildcard $(SRC_DIR)/*.S)
 FILENAMES_ASM = $(notdir $(SRC_ASM))
 OBJFILENAMES_ASM = $(FILENAMES_ASM:.s=.o)
 OBJS_ASM = $(addprefix $(BUILD_DIR)/, $(OBJFILENAMES_ASM:.S=.o))
 vpath %.s $(dir $(SRC_ASM))
 vpath %.S $(dir $(SRC_ASM))
 
-SRC_C += $(wildcard *.c)
+SRC_C += $(wildcard $(SRC_DIR)/*.c)
 FILENAMES_C = $(notdir $(SRC_C))
 OBJS_C = $(addprefix $(BUILD_DIR)/, $(FILENAMES_C:.c=.o))
 vpath %.c $(dir $(SRC_C))
 
-SRC_CXX += $(wildcard *.cpp)
+SRC_CXX += $(wildcard $(SRC_DIR)/*.cpp)
 FILENAMES_CXX = $(notdir $(SRC_CXX))
 OBJS_CXX = $(addprefix $(BUILD_DIR)/, $(FILENAMES_CXX:.cpp=.o))
 vpath %.cpp $(dir $(SRC_CXX))
