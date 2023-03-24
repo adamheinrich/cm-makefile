@@ -19,6 +19,7 @@
 
 OPENCM3_DIR ?= ./libopencm3
 OPENCM3_TARGET ?= stm32/f0
+OPENCM3_DEF ?= -DSTM32F0
 OPENCM3_PREFIX ?= $(CROSS_COMPILE)
 
 OPENCM3_LIB = libopencm3_$(subst /,,$(OPENCM3_TARGET)).a
@@ -35,6 +36,9 @@ HELP_TEXT += \n\
 # Setup linker flags required by libopencm3:
 LDFLAGS += -l$(subst lib,,$(subst .a,,$(OPENCM3_LIB)))
 LDFLAGS += -nostartfiles
+
+# Setup macros
+DEF += $(OPENCM3_DEF)
 
 # Setup dependencies (to build libopencm3 automatically):
 DEPS += libopencm3
